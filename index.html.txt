@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Valentine 💖</title>
+
+<style>
+* { box-sizing: border-box; font-family: 'Poppins', sans-serif; }
+
+body {
+  margin: 0;
+  height: 100vh;
+  background: linear-gradient(135deg, #ffd1dc, #ffe6f0);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+/* HEART RAIN */
+.heart {
+  position: fixed;
+  top: -10px;
+  font-size: 18px;
+  animation: fall linear forwards;
+  pointer-events: none;
+}
+@keyframes fall {
+  to { transform: translateY(110vh); opacity: 0; }
+}
+
+/* CARD */
+.card {
+  width: 90%;
+  max-width: 360px;
+  background: #fff0f6;
+  border-radius: 24px;
+  padding: 30px 20px;
+  text-align: center;
+  box-shadow: 0 25px 50px rgba(0,0,0,0.15);
+}
+
+h1 {
+  color: #d6336c;
+  font-size: 24px;
+}
+
+.quote {
+  font-size: 13px;
+  color: #a61e4d;
+  font-style: italic;
+  margin: 18px 0 25px;
+}
+
+/* BUTTONS */
+.buttons {
+  position: relative;
+  height: 60px;
+}
+
+button {
+  border: none;
+  padding: 12px 22px;
+  border-radius: 999px;
+  font-size: 15px;
+}
+
+#yes {
+  background: #ff4d6d;
+  color: white;
+}
+
+#no {
+  background: #dee2e6;
+  color: #495057;
+  position: absolute;
+  right: 0;
+}
+
+/* POPUP */
+.popup {
+  position: absolute;
+  top: -40px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: white;
+  padding: 6px 14px;
+  border-radius: 20px;
+  font-size: 12px;
+  display: none;
+}
+
+/* FIREWORK */
+.fireworks {
+  position: fixed;
+  inset: 0;
+  background: black;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  font-size: 40px;
+}
+
+/* FINAL */
+.final {
+  display: none;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 12px;
+}
+
+.final img {
+  width: 240px;
+  border-radius: 18px;
+}
+</style>
+</head>
+
+<body>
+
+<!-- AUDIO (hidden) -->
+<audio id="loveSong" preload="auto">
+  <!-- 🔁 CHANGE SONG LINK HERE -->
+  <source src="https://drive.google.com/uc?export=view&id=1Yvi8spYFFgFsVKivqwMJxEw50-KKbtP0" type="audio/mpeg">
+</audio>
+
+<div class="card" id="card">
+  <h1>❤️ Azra ❤️<br>Will you be my Valentine? 💖</h1>
+
+  <div class="quote">
+    "Every moment with you feels like a dream come true..."
+  </div>
+
+  <div class="popup" id="popup">Really? 🥺</div>
+
+  <div class="buttons">
+    <button id="yes">Yes 💘</button>
+    <button id="no">No</button>
+  </div>
+</div>
+
+<div class="fireworks" id="fireworks">🎆 🎇 🎆</div>
+
+<div class="final" id="final">
+  <h2>Yay! 💕</h2>
+  <p>I knew you'd say yes 💖</p>
+  <img src="https://images.unsplash.com/photo-1529634899471-1a7d9b2e9c7a">
+  <p>love you meri hurr parii 💞</p>
+</div>
+
+<script>
+const noBtn = document.getElementById("no");
+const yesBtn = document.getElementById("yes");
+const popup = document.getElementById("popup");
+const card = document.getElementById("card");
+const fireworks = document.getElementById("fireworks");
+const final = document.getElementById("final");
+const song = document.getElementById("loveSong");
+
+const messages = [
+  "Really? 😭",
+  "Think again 🥺",
+  "Nope, not happening 🙅‍♀️",
+  "You sure? 💔"
+];
+
+function moveNo() {
+  const x = Math.random() * 120 - 60;
+  const y = Math.random() * 80 - 40;
+  noBtn.style.transform = `translate(${x}px, ${y}px)`;
+  popup.innerText = messages[Math.floor(Math.random() * messages.length)];
+  popup.style.display = "block";
+}
+
+noBtn.addEventListener("touchstart", moveNo);
+noBtn.addEventListener("mouseenter", moveNo);
+
+function heartRain() {
+  const heart = document.createElement("div");
+  heart.className = "heart";
+  heart.innerText = "💖";
+  heart.style.left = Math.random() * 100 + "vw";
+  heart.style.animationDuration = Math.random() * 2 + 3 + "s";
+  document.body.appendChild(heart);
+  setTimeout(() => heart.remove(), 5000);
+}
+
+yesBtn.addEventListener("click", () => {
+  if (navigator.vibrate) navigator.vibrate([200, 100, 200]);
+
+  song.play(); // 🎵 AUTOPLAY STARTS HERE
+
+  card.style.display = "none";
+  fireworks.style.display = "flex";
+
+  setInterval(heartRain, 250);
+
+  setTimeout(() => {
+    fireworks.style.display = "none";
+    final.style.display = "flex";
+  }, 1800);
+});
+</script>
+
+</body>
+</html>
+
